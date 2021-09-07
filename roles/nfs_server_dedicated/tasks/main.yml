@@ -1,8 +1,6 @@
 ---
 - fail: msg="nfspath is not defined"
   when: nfspath == ''
-- fail: msg="nfsdomain is not defined"
-  when: nfsdomain == ''
 
 - name: setup NFS server
   import_tasks: server.yml

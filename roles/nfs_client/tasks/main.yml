@@ -1,8 +1,6 @@
 ---
 - fail: msg="nfsserver is not defined"
   when: nfsserver == ''
-- fail: msg="nfsdomain is not defined"
-  when: nfsdomain == ''
 - fail: msg="exchange is not defined"
   when: exchange == ''
 
