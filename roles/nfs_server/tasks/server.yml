@@ -20,6 +20,7 @@
     dest: /etc/hosts.allow
     line: "PORTMAP: {{ hostvars[item]['servicenet_ip'] }}"
   with_items: "{{ groups[nfsnodes_group] }}"
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
 
 - name: create /etc/exports.d
   file: path=/etc/exports.d state=directory

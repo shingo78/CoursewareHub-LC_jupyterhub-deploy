@@ -1,18 +1,21 @@
 ---
-- include: login-defs.yml
+- include_vars: "{{ item }}"
+  with_first_found:
+     - "{{ ansible_os_family }}-{{ ansible_distribution_major_version}}.yml"
+     - "{{ ansible_os_family }}.yml"
+
+- include_tasks: login-defs.yml
 
 - yum: name=epel-release
 
-- name: python
-  yum: name=python,python-pip,git state=latest
-
-- name: tornado
-  pip: name=tornado<6 state=latest
-
 - name: install restuser
-  git: repo=https://github.com/minrk/restuser.git dest=/srv/restuser
+  include_tasks: "{{ item }}"
+  with_first_found:
+     - "install-{{ ansible_os_family }}-{{ ansible_distribution_major_version}}.yml"
+     - "install.yml"
 
-- copy: src=restuser.service dest=/etc/systemd/system/restuser.service
+- template: src=restuser.service.j2 dest=/etc/systemd/system/restuser.service
+
 - command: systemctl daemon-reload
 
 - name: start restuser
