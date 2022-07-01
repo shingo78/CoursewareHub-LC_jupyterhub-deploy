@@ -1,0 +1,9 @@
+---
+- name: python
+  yum: name=python,python-pip,git state=latest
+
+- name: tornado
+  pip: name=tornado<6 state=latest
+
+- name: install restuser
+  git: repo=https://github.com/minrk/restuser.git dest=/srv/restuser
